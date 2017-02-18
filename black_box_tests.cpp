@@ -3,21 +3,60 @@
 // Purpose:     Red-Black Tree - public interface tests
 //
 // $NoKeywords: $ivs_project_1 $black_box_tests.cpp
-// $Author:     JMENO PRIJMENI <xlogin00@stud.fit.vutbr.cz>
-// $Date:       $2017-01-04
+// $Author:     Dominik Harmim <xharmi00@stud.fit.vutbr.cz>
+// $Date:       $2017-02-17
 //============================================================================//
 /**
  * @file black_box_tests.cpp
- * @author JMENO PRIJMENI
+ * @author Dominik Harmim <xharmi00@stud.fit.vutbr.cz>
  * 
  * @brief Implementace testu binarniho stromu.
  */
 
 #include <vector>
-
 #include "gtest/gtest.h"
-
 #include "red_black_tree.h"
+
+namespace BlackBoxTesting
+{
+	using namespace ::testing;
+
+
+	class TestingTree : public Test
+	{
+
+	protected:
+		BinaryTree tree;
+
+	};
+
+
+	class EmptyTree : public TestingTree
+	{
+	};
+
+
+	class NonEmptyTree : public TestingTree
+	{
+
+	protected:
+		void SetUp() override
+		{
+//			for (int i = 0; i < 15; i++) {
+//				tree.InsertNode(i);
+//			}
+		}
+
+	};
+
+
+//	TEST_F(EmptyTree, Insert)
+//	{
+//		std::pair<bool, BinaryTree::Node_t *> pair = tree.InsertNode(0);
+
+//		ASSERT_EQ(true, true);
+//	}
+}
 
 //============================================================================//
 // ** ZDE DOPLNTE TESTY **

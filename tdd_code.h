@@ -3,12 +3,13 @@
 // Purpose:     Test Driven Development - priority queue code
 //
 // $NoKeywords: $ivs_project_1 $tdd_code.h
-// $Author:     JMENO PRIJMENI <xlogin00@stud.fit.vutbr.cz>
-// $Date:       $2017-01-04
+// $Author:     Dominik Harmim <xharmi00@stud.fit.vutbr.cz>
+// $Date:       $2017-02-18
 //============================================================================//
+
 /**
  * @file tdd_code.h
- * @author JMENO PRIJMENI
+ * @author Dominik Harmim <xharmi00@stud.fit.vutbr.cz>
  * 
  * @brief Definice rozhrani prioritni fronty.
  */
@@ -27,84 +28,85 @@
  */
 class PriorityQueue
 {
+
 public:
-    //============================================================================//
-    // ** METODY, STRUKTURY ATD. V TETO SEKCI *NEUPRAVUJTE* **
-    //
-    // Metody, struktury atd. totiz tvori verejne "public" rozhrani prioritni
-    // fronty.
-    //
 
-    /**
-     * @brief PriorityQueue
-     * Konstruktor, vytvori prazdnou frontu.
-     */
-    PriorityQueue();
+	/**
+	 * @brief PriorityQueue
+	 * Konstruktor, vytvori prazdnou frontu.
+	 */
+	PriorityQueue();
 
-    /**
-     * @brief ~PriorityQueue
-     * Destruktor, odstrani vsechny polozky i frontu samotnou.
-     */
-    ~PriorityQueue();
+	/**
+	 * @brief ~PriorityQueue
+	 * Destruktor, odstrani vsechny polozky i frontu samotnou.
+	 */
+	~PriorityQueue();
 
-    /**
-     * @brief The Element_t struct
-     * Struktura polozky ve fronte.
-     */
-    struct Element_t {
-        Element_t *pNext;   ///< Ukazatel na nasledujici prvek ve fronte.
-        Element_t *pPrev;   ///< Ukazatel na predchazejici prvek ve fronte.
+	/**
+	 * @brief The Element_t struct
+	 * Struktura polozky ve fronte.
+	 */
+	struct Element_t {
+		Element_t *pNext;   ///< Ukazatel na nasledujici prvek ve fronte.
+		Element_t *pPrev;   ///< Ukazatel na predchazejici prvek ve fronte.
 
-        int value;          ///< Hodnota teto polozky ve fronte.
-    };
+		int value;          ///< Hodnota teto polozky ve fronte.
+	};
 
-    /**
-     * @brief Insert
-     * Zaradi novou polozku s hodnotou "value" do fronty na patricne misto (tak
-     * aby bylo zachovano poradi min->max). Pokud polozka s danou hodnotou jiz
-     * existuji zaradi novou polozku pred/za jiz existujici.
-     * @param value Hodnota nove polozky.
-     */
-    void Insert(int value);
+	/**
+	 * @brief Insert
+	 * Zaradi novou polozku s hodnotou "value" do fronty na patricne misto (tak
+	 * aby bylo zachovano poradi min->max). Pokud polozka s danou hodnotou jiz
+	 * existuji zaradi novou polozku pred/za jiz existujici.
+	 * @param value Hodnota nove polozky.
+	 */
+	void Insert(int value);
 
-    /**
-     * @brief Remove
-     * Odstrani polozku s hodnotou "value" z fronty a vrati "true", pokud polozka
-     * neni nalezena vrati "false". Pokud se ve fronte nachazi vice polozek se
-     * stejnou hodnotou "value", pak odstrani libovolnou z nich.
-     * @param value Hodnota polozky, ktera ma byt odstranena.
-     * @return Vrati true, pokud byla polozka nalezena a odstranena, jinak vraci false.
-     */
-    bool Remove(int value);
+	/**
+	 * @brief Remove
+	 * Odstrani polozku s hodnotou "value" z fronty a vrati "true", pokud polozka
+	 * neni nalezena vrati "false". Pokud se ve fronte nachazi vice polozek se
+	 * stejnou hodnotou "value", pak odstrani prvni z nich.
+	 * @param value Hodnota polozky, ktera ma byt odstranena.
+	 * @return Vrati true, pokud byla polozka nalezena a odstranena, jinak vraci false.
+	 */
+	bool Remove(int value);
 
-    /**
-     * @brief Find
-     * Nalezne libovolnou polozku s hodnotou "value" a vrati ukazatel na tuto polozku,
-     * nebo NULL pokud takova neexistuje.
-     * @param value Hodnota hledane polozky.
-     * @return Vrati ukazatel na polozku s hodnotou "value", nebo NULL pokud takova neexistuje.
-     */
-    Element_t *Find(int value);
+	/**
+	 * @brief Find
+	 * Nalezne prvni polozku s hodnotou "value" a vrati ukazatel na tuto polozku,
+	 * nebo NULL pokud takova neexistuje.
+	 * @param value Hodnota hledane polozky.
+	 * @return Vrati ukazatel na polozku s hodnotou "value", nebo NULL pokud takova neexistuje.
+	 */
+	Element_t *Find(int value);
 
-    /**
-     * @brief GetHead
-     * Vraci ukazatel na prvni polozku ve fronte, ktera je vzdy zaroven polozkou
-     * s nejmensi hodnotou.
-     * @return Vraci ukazatel na 1./nejmensi polozku fronty, nebo NULL, pokud je
-     * fronta prazdna.
-     */
-    Element_t *GetHead();
-
-    //
-    //============================================================================//
+	/**
+	 * @brief GetHead
+	 * Vraci ukazatel na prvni polozku ve fronte, ktera je vzdy zaroven polozkou
+	 * s nejmensi hodnotou.
+	 * @return Vraci ukazatel na 1./nejmensi polozku fronty, nebo NULL, pokud je
+	 * fronta prazdna.
+	 */
+	Element_t *GetHead();
 
 protected:
-    //============================================================================//
-    // ** ZDE DOPLNTE IMPLEMENTACI **
-    //
-    // Zde muzete doplnit neverejne metody a datove polozky potrebne pro vasi
-    // implementaci.
-    //============================================================================//
+
+	Element_t *root; /// Ukazatel na prvni prvek seznamu (tzv. koren/root).
+
+	/**
+	 * @brief Konstruktor pro polozku fronty. Dalo by se to realizovat
+	 * primo v deklaraci struktury `Element_t`, ale tuto strukturu
+	 * nemuzu menit.
+	 *
+	 * @param value Hodnota nove polozky.
+	 * @param pPrev Ukazatel na predchazejici prvek ve fronte.
+	 * @param pNext Ukazatel na nasledujici prvek ve fronte.
+	 * @return Vraci inicializovany element v konzistentnim stavu.
+	 */
+	Element_t *NewElement(int value, Element_t *pPrev = NULL, Element_t *pNext = NULL);
+
 };
 
 #endif // TDD_CODE_H_
