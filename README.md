@@ -15,4 +15,4 @@
 - http://www.umat.feec.vutbr.cz/~kovar/webs/personal/MMAT.pdf
 
 ### Doubly linked list
-- Doubly linked list
+- https://en.wikipedia.org/wiki/Doubly_linked_list
