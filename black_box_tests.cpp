@@ -30,14 +30,13 @@ namespace BlackBoxTesting
 	class TestingTree : public Test
 	{
 
-	public:
-		int numberOfNodes = 13,
-			nodes[13] = {7, 12, 8, 2, 4, 1, 22, 26, 9, 11, 6, 39, 42},
-			numberOfLeafNodes = 14,
-			leafNodeParents[8] = {1, 2, 6, 7, 9, 12, 26, 42};
-
 	protected:
 		BinaryTree tree;
+
+		int numberOfNodes = 13,
+				nodes[13] = {7, 12, 8, 2, 4, 1, 22, 26, 9, 11, 6, 39, 42},
+				numberOfLeafNodes = 14,
+				leafNodeParents[8] = {1, 2, 6, 7, 9, 12, 26, 42};
 
 	};
 

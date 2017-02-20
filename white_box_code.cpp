@@ -46,7 +46,10 @@ bool Matrix::set(size_t row, size_t col, double value)
 
 bool Matrix::set(std::vector<std::vector< double > > values)
 {
-  if(matrix.size() > values.size() || matrix[0].size() > values.size())
+  // TODO: musi se porovnavat radky s radkami a sloupce se sloupci, jinak by nefungovalo napr. vlozeni
+  // hodnot 2x3 do matice 2x3
+  // if(matrix.size() > values.size() || matrix[0].size() > values.size()) -- SPATNE
+  if(matrix.size() > values.size() || matrix[0].size() > values[0].size())
     return false;
   for(int r = 0; r < matrix.size(); r++)
   {
@@ -101,9 +104,13 @@ Matrix Matrix::operator*(const Matrix m) const
     Matrix result = Matrix(matrix.size(), m.matrix[0].size());
     for (int r = 0; r < matrix.size(); r++)
     {
-      for (int c = 0; c < m.matrix[r].size(); c++)
+      // TODO: musi se brat pocet sloupcu prvniho radku, ne r-teho radku, protoze ten nemusi existovat
+      // nasobeni napr. matic 3x2 * 2x3 by potom nefungovalo
+      // for (int c = 0; c < m.matrix[r].size(); c++) -- SPATNE
+      for (int c = 0; c < m.matrix[0].size(); c++)
       {
-        for (int i = 0; i < matrix[r].size(); i++)
+        // for (int i = 0; i < matrix[0].size(); i++) -- SPATNE
+        for (int i = 0; i < matrix[0].size(); i++)
         {
           result.set(r, c, result.get(r, c) +  matrix[r][i] * m.matrix[i][c]);
         }
@@ -137,7 +144,9 @@ std::vector<double> Matrix::solveEquation(std::vector<double> b)
   std::vector<double> res = std::vector<double>(matrix.size(), 0);
   std::vector<std::vector<double> > temp = 
     std::vector<std::vector< double > >(matrix.size(), std::vector<double>(matrix.size(), 0));
-  if(matrix[0].size() != b.size())
+    // TODO: musi se brat pocet radku matice, ne pocet sloupcu, jak je napsano ve zprave chyby
+    // if(matrix[0].size() != b.size()) -- SPATNE
+  if(matrix.size() != b.size())
   {
     throw new std::runtime_error("Pocet prvku prave strany rovnice musi odpovidat poctu radku matice.");
   }
