@@ -109,7 +109,7 @@ Matrix Matrix::operator*(const Matrix m) const
       // for (int c = 0; c < m.matrix[r].size(); c++) -- SPATNE
       for (int c = 0; c < m.matrix[0].size(); c++)
       {
-        // for (int i = 0; i < matrix[0].size(); i++) -- SPATNE
+        // for (int i = 0; i < matrix[r].size(); i++) -- SPATNE
         for (int i = 0; i < matrix[0].size(); i++)
         {
           result.set(r, c, result.get(r, c) +  matrix[r][i] * m.matrix[i][c]);
