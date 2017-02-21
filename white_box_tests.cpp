@@ -124,12 +124,14 @@ namespace WhiteBoxTesting
 
 	TEST_F(TestingMatrix, Construct)
 	{
+		/// spravne vytvorene matice
 		EXPECT_NO_THROW(Matrix());
 		EXPECT_NO_THROW(Matrix(1, 1));
 		EXPECT_NO_THROW(Matrix(12, 23));
 		EXPECT_NO_THROW(Matrix(100, 100));
 		EXPECT_NO_THROW(Matrix(1231, 3212));
 
+		/// spatne vytvorene matice -> Minimalni velikost matice je 1x1
 		EXPECT_ANY_THROW(Matrix(0, 0));
 		EXPECT_ANY_THROW(Matrix(0, 25));
 		EXPECT_ANY_THROW(Matrix(25, 0));
@@ -140,11 +142,13 @@ namespace WhiteBoxTesting
 	{
 		setZero1x1Matrix();
 
+		/// nastaveni hodnot na neexistujic indexy
 		EXPECT_FALSE(matrix.set(1, 1, 0));
 		EXPECT_FALSE(matrix.set(0, 1, 0));
 		EXPECT_FALSE(matrix.set(1, 0, 0));
 		EXPECT_FALSE(matrix.set(312, 745, 0));
 
+		/// nastaveni hodnot na existujici indexy
 		EXPECT_TRUE(matrix.set(0, 0, 0));
 		EXPECT_TRUE(matrix.set(0, 0, -312));
 		EXPECT_TRUE(matrix.set(0, 0, 312));
@@ -158,10 +162,12 @@ namespace WhiteBoxTesting
 	{
 		set6x6Matrix();
 
+		/// nastaveni hodnot na neexistujic indexy
 		EXPECT_FALSE(matrix.set(10, 10, 0));
 		EXPECT_FALSE(matrix.set(6, 6, 0));
 		EXPECT_FALSE(matrix.set(312, 654, 0));
 
+		/// nastaveni hodnot na existujici indexy
 		EXPECT_TRUE(matrix.set(0, 0, 0));
 		EXPECT_TRUE(matrix.set(2, 2, -32));
 		EXPECT_TRUE(matrix.set(5, 0, -3.2));
@@ -173,6 +179,7 @@ namespace WhiteBoxTesting
 	{
 		setZero1x1Matrix();
 
+		/// nastaveni spravnych hodnot do matice
 		EXPECT_TRUE(matrix.set(std::vector<std::vector<double>> {{0}}));
 		EXPECT_TRUE(matrix.set(std::vector<std::vector<double>> {{321312}}));
 		EXPECT_TRUE(matrix.set(std::vector<std::vector<double>> {{-321312}}));
@@ -183,13 +190,55 @@ namespace WhiteBoxTesting
 			{-321.312, 21},
 		}));
 
-		EXPECT_FALSE(matrix.set(std::vector<std::vector<double>> {{}}));
+		/// nastaveni spatnych hodnot do matice
+		EXPECT_FALSE(matrix.set(std::vector<std::vector<double>>(0, std::vector<double>(0, 0))));
+	}
+
+
+	TEST_F(TestingMatrix, SetValues2x3Matrix)
+	{
+		set2x3Matrix();
+
+		/// nastaveni spravnych hodnot do matice
+		// FIXME: tento test neprochazi
+		EXPECT_TRUE(matrix.set(std::vector<std::vector<double>> {
+			{1, 2, 0},
+			{0, 1, 0},
+		}));
+
+		/// nastaveni spatnych hodnot do matice
+		EXPECT_FALSE(matrix.set(std::vector<std::vector<double>> {
+			{1, 4, -2, 2.7, -3.3, 24},
+		}));
+	}
+
+
+	TEST_F(TestingMatrix, SetValues3x2Matrix)
+	{
+		set3x2Matrix();
+
+		/// nastaveni spravnych hodnot do matice
+		EXPECT_TRUE(matrix.set(std::vector<std::vector<double>> {
+			{0, 1},
+			{1, 0},
+			{1, 1},
+		}));
+
+		/// nastaveni spatnych hodnot do matice
+		// FIXME: tento test neprochazi
+		EXPECT_FALSE(matrix.set(std::vector<std::vector<double>> {
+			{3},
+			{2},
+			{1},
+		}));
 	}
 
 
 	TEST_F(TestingMatrix, SetValues6x6Matrix)
 	{
 		set6x6Matrix();
+
+		/// nastaveni spravnych hodnot do matice
 		EXPECT_TRUE(matrix.set(std::vector<std::vector<double>> {
 			{1, 4, -2, 2.7, -3.3, 24},
 			{5, 3, 0, 21, 212, -22.22},
@@ -199,6 +248,7 @@ namespace WhiteBoxTesting
 			{2, 6, 1, 2, 6, -21.2121},
 		}));
 
+		/// nastaveni spatnych hodnot do matice
 		EXPECT_FALSE(matrix.set(std::vector<std::vector<double>> {
 			{1, 4, -2, 2.7, -3.3, 24},
 			{5, 3, 0, 21, 212, -22.22},
@@ -213,10 +263,12 @@ namespace WhiteBoxTesting
 	{
 		setZero1x1Matrix();
 
+		/// hodnoty z neexistujicich indexu
 		EXPECT_TRUE(isnan(matrix.get(1, 1)));
 		EXPECT_TRUE(isnan(matrix.get(10, 10)));
 		EXPECT_TRUE(isnan(matrix.get(3212, 433)));
 
+		/// hodnoty z existujicich indexu
 		EXPECT_DOUBLE_EQ(matrix.get(0, 0), 0);
 	}
 
@@ -225,10 +277,12 @@ namespace WhiteBoxTesting
 	{
 		set6x6Matrix();
 
+		/// hodnoty z neexistujicich indexu
 		EXPECT_TRUE(isnan(matrix.get(23, 321)));
 		EXPECT_TRUE(isnan(matrix.get(6, 0)));
 		EXPECT_TRUE(isnan(matrix.get(3212, 433)));
 
+		/// hodnoty z existujicich indexu
 		EXPECT_DOUBLE_EQ(matrix.get(2, 3), 0);
 		EXPECT_DOUBLE_EQ(matrix.get(0, 4), -3.3);
 		EXPECT_DOUBLE_EQ(matrix.get(3, 0), -0.001);
@@ -241,11 +295,15 @@ namespace WhiteBoxTesting
 		Matrix matrix6x6 = get6x6Matrix();
 		Matrix matrix2x3 = get2x3Matrix();
 
+		/// matice s ruznou velikosti nelze porovnat -> Matice musi mit stejnou velikost.
 		EXPECT_ANY_THROW(matrixZero1x1 == matrix6x6);
 		EXPECT_ANY_THROW(matrix6x6 == matrix2x3);
 
+		/// matice by se mely rovnat
 		EXPECT_TRUE(matrix2x3 == matrix2x3);
 		EXPECT_TRUE(matrixZero1x1 == matrixZero1x1);
+
+		/// matice by se nemely rovnat
 
 		Matrix new6x6Matrix = matrix6x6;
 		new6x6Matrix.set(2, 2, 1);
@@ -263,8 +321,11 @@ namespace WhiteBoxTesting
 		Matrix matrix3x2 = get3x2Matrix();
 		Matrix matrix2x3 = get2x3Matrix();
 
+		/// nelze scitat matice s ruznou velikosti -> Matice musi mit stejnou velikost.
 		EXPECT_ANY_THROW(matrixZero1x1 + matrix3x2);
 		EXPECT_ANY_THROW(matrix3x2 + matrix2x3);
+
+		/// soucty by se mely rovnat ocekavanemu vysledku
 
 		Matrix result1 = matrix2x3 + matrix2x3;
 		Matrix expected1 = Matrix(2, 3);
@@ -291,7 +352,10 @@ namespace WhiteBoxTesting
 		Matrix matrix3x2 = get3x2Matrix();
 		Matrix matrix2x3 = get2x3Matrix();
 
+		/// Prvni matice musi stejny pocet sloupcu jako druha radku.
 		EXPECT_ANY_THROW(matrix2x3 * matrixZero1x1);
+
+		/// souciny be se mely rovnat ocekavanemu vysledku
 
 		Matrix result1 = matrixZero1x1 * matrixZero1x1;
 		Matrix expected1 = Matrix();
@@ -303,6 +367,7 @@ namespace WhiteBoxTesting
 			{2, 1},
 			{1, 0},
 		});
+		// FIXME: tento test neprochazi
 		EXPECT_TRUE(result2 == expected2);
 
 		Matrix result3 = matrix3x2 * matrix2x3;
@@ -312,6 +377,7 @@ namespace WhiteBoxTesting
 			{1, 2, 0},
 			{1, 3, 0},
 		});
+		// FIXME: tento test neprochazi
 		EXPECT_TRUE(result3 == expected3);
 	}
 
@@ -321,6 +387,8 @@ namespace WhiteBoxTesting
 		Matrix matrixZero1x1 = getZero1x1Matrix();
 		Matrix matrix6x6 = get6x6Matrix();
 		Matrix matrix2x3 = get2x3Matrix();
+
+		/// souciny be se mely rovnat ocekavanemu vysledku
 
 		Matrix result1 = matrixZero1x1 * 25;
 		Matrix expected1 = Matrix();
@@ -344,13 +412,15 @@ namespace WhiteBoxTesting
 	{
 		set3x3Matrix();
 
+		/// Pocet prvku prave strany rovnice musi odpovidat poctu radku matice.
 		EXPECT_ANY_THROW(matrix.solveEquation(std::vector<double> {}));
 		EXPECT_ANY_THROW(matrix.solveEquation(std::vector<double>(2, 0)));
 
-		EXPECT_ANY_THROW(get2x3Matrix().solveEquation(std::vector<double>(2, 0)));
-		EXPECT_ANY_THROW(get3x2Matrix().solveEquation(std::vector<double>(3, 0)));
+		/// Matice musi byt ctvercova.
+		EXPECT_ANY_THROW(get2x3Matrix().solveEquation(std::vector<double> {0, 0, 0}));
+		EXPECT_ANY_THROW(get3x2Matrix().solveEquation(std::vector<double> {0, 0, 0}));
 
-		// singularni matice
+		/// singularni matice
 		matrix = Matrix(2, 2);
 		matrix.set(std::vector<std::vector<double>> {
 			{4, 1},
@@ -362,10 +432,10 @@ namespace WhiteBoxTesting
 
 	TEST_F(TestingMatrix, Equation1x1)
 	{
-		// TODO: pocita spatne, ale melo by fungovat
 		setZero1x1Matrix();
 		matrix.set(0, 0, 2);
 
+		// FIXME: tento test neprochazi
 		EXPECT_TRUE(matrix.solveEquation(std::vector<double> {1}) == (std::vector<double> {0.5}));
 	}
 
