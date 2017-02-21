@@ -353,8 +353,8 @@ namespace WhiteBoxTesting
 		// singularni matice
 		matrix = Matrix(2, 2);
 		matrix.set(std::vector<std::vector<double>> {
-				{4, 1},
-				{12, 3},
+			{4, 1},
+			{12, 3},
 		});
 		EXPECT_ANY_THROW(matrix.solveEquation(std::vector<double> {5, 15}));
 	}
@@ -363,10 +363,10 @@ namespace WhiteBoxTesting
 	TEST_F(TestingMatrix, Equation1x1)
 	{
 		// TODO: pocita spatne, ale melo by fungovat
-//		setZero1x1Matrix();
-//		matrix.set(0, 0, 2);
-//
-//		EXPECT_TRUE(matrix.solveEquation(std::vector<double> {1}) == (std::vector<double> {0.5}));
+		setZero1x1Matrix();
+		matrix.set(0, 0, 2);
+
+		EXPECT_TRUE(matrix.solveEquation(std::vector<double> {1}) == (std::vector<double> {0.5}));
 	}
 
 
